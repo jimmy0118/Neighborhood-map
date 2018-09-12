@@ -19,3 +19,14 @@ nav {
   width: 200px;
   height: 200px;
 }
+
+#foursquare-img {
+  height: 48px;
+  width: 48px;
+}
+
+footer {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
