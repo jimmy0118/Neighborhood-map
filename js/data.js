@@ -30,31 +30,10 @@ var locations = [
         }
     },
     {
-        title: '85 Sky Tower',
-        location: {
-            lat: 22.611598,
-            lng: 120.300196
-        }
-    },
-    {
         title: 'Yehliu Geopark',
         location: {
             lat: 25.208805,
             lng: 121.693102
-        }
-    },
-    {
-        title: 'Eluanbi Lighthouse',
-        location: {
-            lat: 21.902242,
-            lng: 120.852626
-        }
-    },
-    {
-        title: 'Sun Moon Lake',
-        location: {
-            lat: 23.857334,
-            lng: 120.915913
         }
     }
 ];
