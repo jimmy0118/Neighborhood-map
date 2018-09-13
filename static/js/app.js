@@ -1,16 +1,3 @@
-// Open the drawer when the menu ison is clicked.
-var menu = document.querySelector('#menu');
-var main = document.querySelector('main');
-var drawer = document.querySelector('#drawer');
-
-menu.addEventListener('click', function(e) {
-    drawer.classList.toggle('open');
-    e.stopPropagation();
-});
-main.addEventListener('click', function() {
-    drawer.classList.remove('open');
-});
-
 // Global Varialbes
 var map;
 var largeInfowindow;
@@ -182,4 +169,24 @@ function toggleBounce(marker) {
             marker.setAnimation(null);
         }, 1400);
   }
+}
+
+// Open/close the drawer when the menu ison is clicked.
+function toggleNav() {
+    var navSize = document.getElementById("drawer").style.width;
+    if (navSize === "250px") {
+        return close();
+    }
+    return open();
+}
+
+function open() {
+    document.getElementById("drawer").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+function close() {
+    document.getElementById("drawer").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+    document.body.style.backgroundColor = "white";
 }

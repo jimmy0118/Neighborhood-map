@@ -8,21 +8,17 @@
 </head>
 <body>
     <div class="container">
-        <nav id="drawer">
+        <nav id="drawer" class="nav">
             <h3>Neighborhood Map</h3>
             <input class="filter" placeholder="Filter Locations" data-bind="textInput: searchText, valueUpdate: 'afterkeydown'">
             <ul data-bind="foreach: filteredList">
                 <li data-bind="text: title, click: showLocation"></li>
             </ul>
         </nav>
-        <main>
-            <a id="menu">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
-              </svg>
-            </a>
+        <div id="main" class="main">
+            <span style="font-size:30px;cursor:pointer" onclick="toggleNav()">&#9776;</span>
             <div id="map"></div>
-        </main>
+        </div>
     </div>
     <footer class="footer">
         <a href="https://developer.foursquare.com/" class="href" target="_blank">
