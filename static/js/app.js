@@ -74,10 +74,16 @@ var Location = function(data) {
     // Create an onclick event to open the large infowindow at each marker.
     this.marker.addListener('click', function() {
       populateInfoWindow(this, self.address, self.city, self.country, largeInfowindow);
+      toggleBounce(this);
     });
 
     // show item info when selected from list.
     this.showLocation = function(location) {
+        google.maps.event.trigger(self.marker, 'click');
+    };
+
+    // Create bounce effect when item selected
+    this.bounce = function(place) {
         google.maps.event.trigger(self.marker, 'click');
     };
 };
@@ -151,3 +157,16 @@ function populateInfoWindow(marker, address, city, country, infowindow) {
       infowindow.open(map, marker);
     }
 };
+
+// This function is about adding functionality to animate a map marker when
+//either the list item associated with it or the map marker itself is selected.
+function toggleBounce(marker) {
+    if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+    } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function() {
+            marker.setAnimation(null);
+        }, 1400);
+  }
+}
