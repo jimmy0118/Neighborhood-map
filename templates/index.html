@@ -10,6 +10,10 @@
     <div class="container">
         <nav>
             <h3>Neighborhood Map</h3>
+            <input class="filter" placeholder="Filter Locations" data-bind="textInput: searchText, valueUpdate: 'afterkeydown'">
+            <ul data-bind="foreach: filteredList">
+                <li data-bind="text: title, click: showLocation"></li>
+            </ul>
         </nav>
         <div id="map"></div>
     </div>

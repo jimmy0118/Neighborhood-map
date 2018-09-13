@@ -16,47 +16,6 @@ function initMap() {
   bounds = new google.maps.LatLngBounds();
 
   ko.applyBindings(new ViewModel());
-  /*
-  // The following group uses the location array to create an array of markers on initialize.
-  for (var i = 0; i < locations.length; i++) {
-          // Get the position from the location array.
-          var position = locations[i].location;
-          var title = locations[i].title;
-
-          var clientID = 'S4QE4Z25BER33C3JVBNJIFYZS4YHZ0Y4X1SAENVIQHNNAIV1';
-          var clientSecret = 'WJNLUZTKA135VHB15B2IKPYXCOOT2DXQSWDLHFIKMKKSEZRA';
-
-          // Get JSON request of foursquare data
-          var fsurl = 'https://api.foursquare.com/v2/venues/search?client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20180323&limit=1&ll=' + position.lat + ',' + position.lng +'&query=' + title;
-
-          $.getJSON(fsurl).done(function(data) {
-              var results = data.response.venues[0];
-              address = results.location.formattedAddress[0];
-              city = results.location.formattedAddress[1];
-              country = results.location.formattedAddress[1];
-          }).fail(function() {
-              window.alert('Something went wrong with foursquare');
-          });
-
-          // Create a marker per location, and put into markers array.
-          var marker = new google.maps.Marker({
-            map: map,
-            position: position,
-            title: title,
-            animation: google.maps.Animation.DROP,
-          });
-          // Push the marker to our array of markers.
-          markers.push(marker);
-          // Create an onclick event to open an infowindow at each marker.
-          bounds.extend(markers[i].position);
-          // Create an onclick event to open the large infowindow at each marker.
-          marker.addListener('click', function() {
-            populateInfoWindow(this, address, city, country, largeInfowindow);
-          });
-        }
-        // Extend the boundaries of the map for each marker
-        map.fitBounds(bounds);
-  */
 }
 
 // Handle map error
@@ -74,6 +33,7 @@ var Location = function(data) {
     this.city = '',
     this.country = '';
 
+    this.searchTitle = data.title.toLowerCase()
     this.visible = ko.observable(true);
 
     // set variable clientID and clientSecret for using foursquare apis
@@ -116,6 +76,33 @@ var Location = function(data) {
       populateInfoWindow(this, self.address, self.city, self.country, largeInfowindow);
     });
 
+    // show item info when selected from list.
+    this.showLocation = function(location) {
+        google.maps.event.trigger(self.marker, 'click');
+    };
+};
+
+// Constructing ViewModel
+var ViewModel = function() {
+    var self = this;
+
+    this.searchText = ko.observable('');
+    this.mapList = ko.observableArray([]);
+
+    // Add markers for each location.
+    locations.forEach(function(location) {
+        self.mapList.push( new Location(location) );
+    });
+
+    // locations viewed on map
+    this.filteredList = ko.computed(function() {
+        return this.mapList().filter(function(location) {
+            var matched = location.searchTitle.indexOf(this.searchText().toLowerCase()) !== -1;
+            location.marker.setVisible(matched);
+
+            return matched;
+        }, this);
+    }, this);
 };
 
 // This function populates the infowindow when the marker is clicked.
@@ -164,15 +151,3 @@ function populateInfoWindow(marker, address, city, country, infowindow) {
       infowindow.open(map, marker);
     }
 };
-
-// Constructing ViewModel
-var ViewModel = function() {
-    var self = this;
-
-    this.mapList = ko.observableArray([]);
-
-    // Add markers for each location.
-    locations.forEach(function(location) {
-        self.mapList.push( new Location(location) );
-    });
-}
