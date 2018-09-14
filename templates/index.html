@@ -7,19 +7,25 @@
     <link href="{{ url_for('static', filename='css/map.css')}}" rel="stylesheet" type="text/css">
 </head>
 <body>
+    <!--Main content of the webpage-->
     <div class="container">
+        <!--Nav bar-->
         <nav id="drawer" class="nav">
+            <span style="font-size:30px;cursor:pointer" class="closebtn" onclick="closeNav()">&times;</span>
             <h3>Neighborhood Map</h3>
             <input class="filter" placeholder="Filter Locations" data-bind="textInput: searchText, valueUpdate: 'afterkeydown'">
             <ul data-bind="foreach: filteredList">
                 <li data-bind="text: title, click: showLocation"></li>
+                <hr>
             </ul>
         </nav>
+        <!--Google Map-->
         <div id="main" class="main">
-            <span style="font-size:30px;cursor:pointer" onclick="toggleNav()">&#9776;</span>
+            <span style="font-size:30px;cursor:pointer;color:#ffffff;" onclick="openNav()">&#9776;</span>
             <div id="map"></div>
         </div>
     </div>
+    <!--Footer of the webpage-->
     <footer class="footer">
         <a href="https://developer.foursquare.com/" class="href" target="_blank">
             <img id="foursquare-img" src="http://www.freeiconspng.com/uploads/foursquare-icon-22.png" alt="used with foursquare" >

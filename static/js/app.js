@@ -75,6 +75,7 @@ var Location = function(data) {
     this.marker.addListener('click', function() {
       populateInfoWindow(this, self.address, self.city, self.country, largeInfowindow);
       toggleBounce(this);
+      map.panTo(this.getPosition());
     });
 
     // show item info when selected from list.
@@ -172,21 +173,12 @@ function toggleBounce(marker) {
 }
 
 // Open/close the drawer when the menu ison is clicked.
-function toggleNav() {
-    var navSize = document.getElementById("drawer").style.width;
-    if (navSize === "250px") {
-        return close();
-    }
-    return open();
-}
-
-function open() {
+function openNav() {
     document.getElementById("drawer").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
 }
 
-function close() {
+function closeNav() {
     document.getElementById("drawer").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
-    document.body.style.backgroundColor = "white";
 }
